@@ -1,3 +1,6 @@
+// Head First Java 
+// Chapter 1: Coding the "10 green bottles" song
+
 public class BottleSong {
     public static void main(String[] args) {
         int bottlesNum = 10;
