@@ -37,13 +37,9 @@ class RyanAndMonicaJob implements Runnable {
 
     private void goShopping(int amount) {
 
-        if (account.getBalance() >= amount) {
-            System.out.println(name + " is about to spend");
-            account.spend(amount);
-            System.out.println(name + " finishes spending");
-        } else {
-            System.out.println("Sorry, not enough for " + name);
-        }
+        System.out.println(name + " is about to spend");
+        account.spend(name, amount);
+        System.out.println(name + " finishes spending");
     }
 }
 
@@ -55,10 +51,15 @@ class BankAccount {
         return balance;
     }
 
-    public void spend(int amount) {
-        balance = balance - amount;
-        if (balance < 0) {
-            System.out.println("Overdrawn!");
+    public synchronized void spend(String name, int amount) {
+
+        if (balance >= amount) {
+            balance = balance - amount;
+            if (balance < 0) {
+                System.out.println("Overdrawn!");
+            }
+        } else {
+            System.out.println("Sorry, not enough for " + name);
         }
     }
 }
