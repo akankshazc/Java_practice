@@ -1,4 +1,6 @@
+package hf_1;
 // Head First Java
+
 // Chapter 1: Phrase-o-matic class to output random phrases for marketing
 
 public class PhraseOMatic {
