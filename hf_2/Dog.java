@@ -1,4 +1,6 @@
+package hf_2;
 // Head First Java
+
 // Chapter 2: Making an object
 
 class Dog {
