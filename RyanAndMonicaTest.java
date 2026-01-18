@@ -1,6 +1,7 @@
 // Chapter 18
 
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class RyanAndMonicaTest {
 
@@ -45,18 +46,20 @@ class RyanAndMonicaJob implements Runnable {
 
 class BankAccount {
 
-    private int balance = 100;
+    private final AtomicInteger balance = new AtomicInteger(100);
 
     public int getBalance() {
-        return balance;
+        return balance.get();
     }
 
-    public synchronized void spend(String name, int amount) {
+    public void spend(String name, int amount) {
 
-        if (balance >= amount) {
-            balance = balance - amount;
-            if (balance < 0) {
-                System.out.println("Overdrawn!");
+        int initialBalance = balance.get();
+
+        if (initialBalance >= amount) {
+            boolean success = balance.compareAndSet(initialBalance, initialBalance - amount);
+            if (!success) {
+                System.out.println("Sorry " + name + ", you haven't spend the money.");
             }
         } else {
             System.out.println("Sorry, not enough for " + name);
